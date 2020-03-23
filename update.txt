@@ -1,0 +1,2 @@
+测试git把本地文件同步到git仓库
+mayunddddddff
