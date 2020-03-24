@@ -1,2 +1,7 @@
 测试git把本地文件同步到git仓库
-mayunddddddff
+
+PS E:\工作\开课吧\实操\project_full> git push
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+###解决
+git pull origin master --allow-unrelated-histories
