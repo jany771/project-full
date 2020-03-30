@@ -94,7 +94,8 @@ export default {
                     pwd:md5(this.form.pwd),
                     captcha:this.form.captcha
                 }
-                let ret = await this.$http.post('urser/register',obj)
+                let ret = await this.$http.post('user/register',obj)
+                console.log("ret",ret)
                 // code=0 就是成功
                 if(ret.code==0){
                     this.$alert('注册成功',"成功",{
