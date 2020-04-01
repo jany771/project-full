@@ -97,7 +97,8 @@ export default {
                 let ret = await this.$http.post('user/register',obj)
                 console.log("ret",ret)
                 // code=0 就是成功
-                if(ret.code==0){
+                if(ret.data.code==0){
+                  //alert('ok')
                     this.$alert('注册成功',"成功",{
                         confirmButtonText:"去登录",
                         callback:()=>{
@@ -105,7 +106,7 @@ export default {
                         }
                     })
                 }else{
-                    this.$message.error(ret.message)
+                    this.$message.error(ret.data.message)
                 }
               }else{
                   console.log("校验失败")

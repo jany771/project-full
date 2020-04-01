@@ -1,4 +1,5 @@
 
+const md5 = require('md5')
 const BaseController = require('./base');
 
 const createRule={
@@ -7,6 +8,8 @@ const createRule={
   pwd:{type:"string"},
   captcha:{type:"string"}
 }
+
+const hashSalt = "kaikebai.com@12345";
 
 class UserController extends BaseController {
   async login() {
@@ -26,8 +29,33 @@ class UserController extends BaseController {
     }
     const {email,pwd,nickName,captcha} = ctx.request.body;
     console.log({email,pwd,nickName,captcha})
+    console.log("session",ctx.session);
+    if(captcha.toUpperCase() === ctx.session.captcha.toUpperCase()){
+      //邮箱是否重复
+      if(await this.checkEmail(email)){
+        this.error("邮箱重复了")
+      }else{
+        const ret = await ctx.model.User.create({
+          email,
+          nickName,
+          pwd:md5(pwd+hashSalt)
+        })
 
-    this.success({name:'kkb'})
+        if(ret._id){
+          this.message("注册成功了")
+        }
+      }
+    }else{
+      this.error("验证码错误")
+    }
+
+
+   // this.success({name:'kkb'})
+  }
+
+  async checkEmail(email) {
+    const user = await this.ctx.model.User.findOne({ email });
+    return user;
   }
 
   async verify() {
