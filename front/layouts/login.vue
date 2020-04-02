@@ -27,6 +27,11 @@ export default {
           width 200px
       .captcha-container
         width 400px
+        .el-button
+          width 90px
+          padding 0
+          line-height 40px
+
         .captcha
           position absolute
           right -150px

@@ -1,6 +1,7 @@
 
-const md5 = require('md5')
+const md5 = require('md5');
 const BaseController = require('./base');
+const jwt = require('jsonwebtoken');
 
 const createRule={
   email:{type:"email"},
@@ -13,6 +14,37 @@ const hashSalt = "kaikebai.com@12345";
 
 class UserController extends BaseController {
   async login() {
+    //this.success("token")
+    const {ctx,app} = this;
+    const {email,captcha,pwd} = ctx.request.body;
+
+    if(captcha.toUpperCase() !== ctx.session.captcha.toUpperCase()){
+      return this.error("验证码错误")
+    }
+
+    const user = await ctx.model.User.findOne({
+      email,
+      pwd:md5(pwd+hashSalt)
+    })
+
+    if(!user){
+      return this.error("用户名或密码错误")
+    }
+
+    //用户名信息加密成token 返回
+    const token = jwt.sign({
+      _id:user._id,
+      email     
+    },
+    app.config.jwt.secret,{
+      expiresIn:"1h"
+    })
+
+    this.success({
+      token,
+      email,
+      nickName:user.nickName
+    })
 
   }
 
@@ -31,6 +63,8 @@ class UserController extends BaseController {
     console.log({email,pwd,nickName,captcha})
     console.log("session",ctx.session);
     if(captcha.toUpperCase() === ctx.session.captcha.toUpperCase()){
+        this.error("验证码错误")
+      }
       //邮箱是否重复
       if(await this.checkEmail(email)){
         this.error("邮箱重复了")
@@ -45,9 +79,7 @@ class UserController extends BaseController {
           this.message("注册成功了")
         }
       }
-    }else{
-      this.error("验证码错误")
-    }
+    
 
 
    // this.success({name:'kkb'})
