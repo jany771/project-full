@@ -8,11 +8,12 @@ module.exports = app => {
   router.get('/', controller.home.index);
   // 验证码
   router.get('/captcha', controller.util.captcha);
+  router.get('/sendCode', controller.util.sendCode);
 
   router.group({ name: 'user', prefix: '/user' }, router => {
     const { info, register, login, verify } = controller.user;
    
-     router.post('/register', register);
+    router.post('/register', register);
     router.post('/login', login);
     router.get('/info', info);
     router.get('/verify', verify);

@@ -19,10 +19,8 @@
       </el-form-item>
 
         <el-form-item prop="emailcode" label="邮箱验证码：" class="captcha-container">
-          <div class="captcha">
-           <el-button @click="sendEmailCode" type="primary" :disabled="send.time>0">{{sendText}}</el-button>
-        </div>
-        <el-input v-model="form.captcha"  placeholder="请输入邮箱验证码"></el-input>
+          <div class="captcha"><el-button @click="sendEmailCode" type="primary" :disabled="send.time>0">{{sendText}}</el-button></div>
+            <el-input  v-model="form.emailcode"  placeholder="请输入邮箱验证码"></el-input>
       </el-form-item>
 
       <el-form-item prop="pwd" label="密码：">       
@@ -43,7 +41,7 @@ export default {
   layout: "login",
   computed: {
     sendText(){
-        if(this.send.timer<0){
+        if(this.send.timer<=0){
             return "发送"
         }else{
             return `${this.send.timer}s之后发送`
@@ -56,9 +54,10 @@ export default {
             timer:0
         },
       form: {
-        email: "zhjnjn@qq.com",
+        email: "zhjnjn93@163.com",
         pwd: "123456", 
-        captcha:"" ,  
+        captcha:"" , 
+        emailcode:"" 
       },
       rules: {
         email: [
@@ -82,7 +81,8 @@ export default {
     };
   },
   methods: {
-      sendEmailCode(){
+      async sendEmailCode(){
+        await this.$http.get('/sendCode?email='+this.form.email)
         this.send.timer=10;         
         this.timer =  setInterval(() => {
             this.send.timer -=1;
