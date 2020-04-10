@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       form: {
-        email: "zhjnjn@qq.com",
+        email: "zhjnjn93@163.com",
         nickName:"wowo",
         pwd: "123456",
         repwd:"123456",  

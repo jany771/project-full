@@ -16,7 +16,13 @@ class UserController extends BaseController {
   async login() {
     //this.success("token")
     const {ctx,app} = this;
-    const {email,captcha,pwd} = ctx.request.body;
+  
+    const {email,captcha,pwd,emailcode} = ctx.request.body;
+    console.log(emailcode);
+    console.log("ctx.request.body:",ctx.request.body);
+    if(emailcode !== ctx.session.emailcode){
+      return this.error("邮箱验证码错误")
+    }
 
     if(captcha.toUpperCase() !== ctx.session.captcha.toUpperCase()){
       return this.error("验证码错误")
@@ -57,6 +63,7 @@ class UserController extends BaseController {
       //校验传递的参数
       ctx.validate(createRule);
     }catch(e){
+      console.log(e)
       return this.error('参数校验失败',-1, e.errors)
     }
     const {email,pwd,nickName,captcha} = ctx.request.body;
