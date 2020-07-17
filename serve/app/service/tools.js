@@ -15,7 +15,7 @@ class ToolService extends Service{
     async sendMail(email, subject,text, html){
         const mailOptions = {
             from: userEmail,
-            cc:userEmail,
+            cc:userEmail,//给自己发送
             to:email,
             subject,
             text,
