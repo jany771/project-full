@@ -1,4 +1,5 @@
 # project-full
+<<<<<<< HEAD
 
 #### 介绍
 开课吧全栈，项目实训
@@ -35,3 +36,6 @@
 4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
 5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
 6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+=======
+开课吧项目实训
+>>>>>>> 880a3eed512fc68042f501ff7e576a4b534a0b2a
